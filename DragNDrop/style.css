@@ -1,0 +1,259 @@
+/* TGPlug: DragDrop Loader
+ * TGUID: workshop.shaman.dragdroploader
+ * Version: 1.0.0
+ * Description: Styles for the drag-and-drop file loader interface
+ */
+
+/* === DRAG DROP ZONE === */
+.tg-dragdrop-zone {
+    margin: 12px 16px;
+    padding: 32px 20px;
+    border: 2px dashed var(--border);
+    border-radius: 16px;
+    background: var(--menu-bg);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.tg-dragdrop-zone::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(66, 133, 244, 0.03) 0%, 
+        rgba(196, 113, 237, 0.03) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.tg-dragdrop-zone:hover::before {
+    opacity: 1;
+}
+
+.tg-dragdrop-zone:hover {
+    border-color: var(--primary);
+    background: var(--item-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* === DRAG OVER STATE === */
+.tg-dragdrop-zone.tg-drag-over {
+    border-color: var(--primary);
+    border-style: solid;
+    background: var(--primary);
+    background: linear-gradient(135deg, 
+        rgba(66, 133, 244, 0.15) 0%, 
+        rgba(196, 113, 237, 0.15) 100%);
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(66, 133, 244, 0.3);
+}
+
+.tg-dragdrop-zone.tg-drag-over .tg-drop-icon {
+    animation: bounce 0.6s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-8px) scale(1.1); }
+}
+
+/* === LOADING STATE === */
+.tg-dragdrop-zone.tg-loading {
+    border-color: var(--primary);
+    border-style: solid;
+    pointer-events: none;
+}
+
+.tg-dragdrop-zone.tg-loading .tg-drop-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* === SUCCESS STATE === */
+.tg-dragdrop-zone.tg-success {
+    border-color: #34a853;
+    border-style: solid;
+    background: rgba(52, 168, 83, 0.1);
+    pointer-events: none;
+}
+
+.tg-dragdrop-zone.tg-success .tg-drop-icon {
+    animation: successPulse 0.6s ease-out;
+}
+
+@keyframes successPulse {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* === ERROR STATE === */
+.tg-dragdrop-zone.tg-error {
+    border-color: #ea4335;
+    border-style: solid;
+    background: rgba(234, 67, 53, 0.1);
+    pointer-events: none;
+}
+
+.tg-dragdrop-zone.tg-error .tg-drop-icon {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+/* === CONTENT ELEMENTS === */
+.tg-drop-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    transition: transform 0.3s ease;
+}
+
+.tg-dragdrop-zone:hover .tg-drop-icon {
+    transform: scale(1.1);
+}
+
+.tg-drop-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    transition: color 0.3s ease;
+}
+
+.tg-dragdrop-zone:hover .tg-drop-text {
+    color: var(--primary);
+}
+
+.tg-drop-subtext {
+    font-size: 11px;
+    color: var(--text-light);
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.tg-dragdrop-zone:hover .tg-drop-subtext {
+    opacity: 1;
+}
+
+/* === DARK MODE ADJUSTMENTS === */
+body.dark-mode .tg-dragdrop-zone {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .tg-dragdrop-zone:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 20px rgba(66, 133, 244, 0.3);
+}
+
+body.dark-mode .tg-dragdrop-zone.tg-drag-over {
+    background: linear-gradient(135deg, 
+        rgba(66, 133, 244, 0.2) 0%, 
+        rgba(196, 113, 237, 0.2) 100%);
+}
+
+/* === RITUAL MODE ADJUSTMENTS === */
+
+/* Matrix Mode */
+body.ritual-matrix .tg-dragdrop-zone {
+    border-color: #003300;
+}
+
+body.ritual-matrix .tg-dragdrop-zone:hover {
+    border-color: #00ff00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+}
+
+body.ritual-matrix .tg-drop-text,
+body.ritual-matrix .tg-drop-subtext {
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff00;
+}
+
+/* Retro Mode */
+body.ritual-retro .tg-dragdrop-zone {
+    border-color: #8b7d6b;
+    background: #e0d0b0;
+}
+
+body.ritual-retro .tg-dragdrop-zone:hover {
+    border-color: #4a3b2a;
+    box-shadow: 2px 2px 0px #8b7d6b;
+}
+
+body.ritual-retro .tg-drop-text {
+    color: #4a3b2a;
+    font-family: 'Courier New', monospace;
+}
+
+/* Material You (MD3) Mode */
+body.ritual-md3 .tg-dragdrop-zone {
+    border-radius: 28px;
+    border: none;
+    background: color-mix(in srgb, var(--primary) 8%, var(--menu-bg));
+}
+
+body.ritual-md3 .tg-dragdrop-zone:hover {
+    background: color-mix(in srgb, var(--primary) 15%, var(--menu-bg));
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+body.ritual-md3 .tg-dragdrop-zone.tg-drag-over {
+    background: color-mix(in srgb, var(--primary) 25%, var(--menu-bg));
+}
+
+/* === ACCESSIBILITY === */
+.tg-dragdrop-zone:focus-within {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* === RESPONSIVE ADJUSTMENTS === */
+@media (max-width: 768px) {
+    .tg-dragdrop-zone {
+        padding: 24px 16px;
+    }
+    
+    .tg-drop-icon {
+        font-size: 36px;
+    }
+    
+    .tg-drop-text {
+        font-size: 13px;
+    }
+    
+    .tg-drop-subtext {
+        font-size: 10px;
+    }
+}
+
+/* === ANIMATION ENHANCEMENTS === */
+.tg-dragdrop-zone {
+    animation: fadeInSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -1,82 +1,103 @@
-/* TGPlug: TGLite (TV/Low-Spec Mode)
-   ID: workshop.shaman.tglite
-   Description: Nukes visual effects for raw performance.
+/* TGPlug: Performance Ritual (Low-Spec Mode)
+   TGUID: workshop.shaman.performance
+   Description: Strips effects for potato hardware
 */
 
-/* --- THE NUCLEAR OPTION: DISABLE EXPENSIVE RENDERING --- */
-body, .toolbar, .menu-content, button, input {
+/* --- Performance Mode Logic --- */
+body.ritual-performance {
+    /* KILL ALL EXPENSIVE EFFECTS */
+    --blur-amount: 0px !important;
+    --filter-fx: none !important;
+    
+    /* Flat colors - no gradients to save GPU */
+    --menu-bg: #f5f5f5 !important;
+    --toolbar-bg: #ffffff !important;
+}
+
+/* DISABLE ALL ANIMATIONS */
+body.ritual-performance * {
+    animation: none !important;
+    transition: none !important;
+}
+
+/* REMOVE BACKDROP FILTERS (The #1 CPU killer) */
+body.ritual-performance .toolbar,
+body.ritual-performance .menu-content,
+body.ritual-performance .tg-home-content {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
+}
+
+/* SIMPLIFY SHADOWS */
+body.ritual-performance button,
+body.ritual-performance .menu-content,
+body.ritual-performance .toolbar {
     box-shadow: none !important;
-    text-shadow: none !important;
-    transition: none !important; /* No animations allowed */
-    filter: none !important;
+    border-bottom: 1px solid #ccc;
+}
+
+/* STATIC BUTTONS (no hover transforms) */
+body.ritual-performance button:hover {
+    transform: none !important;
+    background: #e0e0e0 !important;
+}
+
+/* REMOVE RIPPLE EFFECTS & OMNIBOX FX */
+body.ritual-performance button::before { display: none !important; }
+body.ritual-performance #address {
+    transform: none !important;
+    box-shadow: none !important;
+    border: 1px solid #999;
+}
+body.ritual-performance #address:focus {
+    border: 2px solid var(--primary);
+}
+
+/* STATIC TGHOME (no float animation) */
+body.ritual-performance .tg-home-content {
     animation: none !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    background: rgba(50, 50, 50, 0.9) !important; /* Solid fallback */
 }
 
-/* Force Flat UI */
-:root {
-    --bg: #000000 !important;
-    --toolbar-bg: #1a1a1a !important;
+/* INSTANT MENU & STATUS */
+body.ritual-performance .menu-content { animation: none !important; }
+body.ritual-performance .status-bar.loading::after { display: none !important; }
+
+/* STATIC MENU ITEMS */
+body.ritual-performance .menu-item {
+    animation: none !important;
+    transition: none !important;
+}
+body.ritual-performance .menu-item:hover {
+    transform: none !important;
+    border-left: none !important;
+    background: #ddd !important;
+}
+
+/* DISABLE PLUG GLOW */
+body.ritual-performance .plug-dot { animation: none !important; }
+
+/* DARK MODE OVERRIDES FOR PERFORMANCE */
+body.ritual-performance.dark-mode {
+    --menu-bg: #1a1a1a !important;
+    --toolbar-bg: #000000 !important;
     --text: #ffffff !important;
-    --border: #444444 !important;
-    --primary: #00ffff !important; /* Cyan is high contrast */
+    border-color: #333 !important;
 }
 
-body {
-    background: #000000 !important;
-    font-family: 'Courier New', monospace !important; /* Faster to render than web fonts */
-}
-
-/* Simplify the Toolbar for TV Remotes */
-.toolbar {
-    height: 60px !important; /* Bigger targets for TV cursor */
-    background: #111 !important;
-    border-bottom: 2px solid var(--primary) !important;
-    padding: 5px !important;
-}
-
-/* Big chunky inputs */
-#address {
-    background: #000 !important;
-    color: #fff !important;
-    border: 2px solid #555 !important;
-    font-size: 18px !important;
-    height: 40px !important;
-    border-radius: 0 !important; /* Radius is expensive on old rendering engines */
-}
-
-#address:focus {
-    border-color: var(--primary) !important;
-}
-
-/* Hide elements that are hard to use on TV */
-#tgHome, .tg-home-content, #menuBtn, .menu-content, #bookmarkBtn {
-    display: none !important; 
-}
-
-/* Status bar simplification */
-.status-bar {
-    background: #000 !important;
-    color: var(--primary) !important;
-    font-weight: bold;
-}
-
-/* Big Buttons */
-.tv-btn {
-    background: #333 !important;
-    color: white !important;
-    border: 1px solid white !important;
-    width: 50px !important;
-    height: 40px !important;
-    margin-right: 5px;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 0 !important;
-}
-
-.tv-btn:hover {
-    background: var(--primary) !important;
-    color: black !important;
+/* PERFORMANCE MODE INDICATOR */
+body.ritual-performance::after {
+    content: '⚡ Low-Spec Mode Active';
+    position: fixed;
+    bottom: 30px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.9);
+    color: #00ff00;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    z-index: 9999;
+    pointer-events: none;
+    font-family: monospace;
 }

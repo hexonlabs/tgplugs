@@ -1,114 +1,152 @@
-/* TGPlug: TGLite (TV/Low-Spec Mode)
-   ID: workshop.shaman.tglite
-   Description: DOM Surgery for performance, now with Gatekeeper Compliance.
-*/
+// TGPlug: Performance Ritual (Low-Spec Mode)
+// TGUID: workshop.shaman.performance
+// Author: Master Shaman
 
 (function() {
     'use strict';
     
-    // 1. Identity Definition
-    const MOD_ID = "workshop.shaman.tglite";
+    const MOD_ID = 'workshop.shaman.performance';
     
-    // 2. The Gatekeeper Compliant Startup Pattern
+    // --- 1. Secure Initialization Pattern ---
     function startPlug() {
-        // Check if TGMoLink API is actually ready
         if (window.TGMoLink && window.TGMoLink.register) {
-            
-            // Attempt to register and CAPTURE the result
-            const isRegistered = window.TGMoLink.register(MOD_ID);
-            
-            if (isRegistered) {
-                console.log(`[${MOD_ID}] Security Verified. Initializing Potato Mode... 🥔`);
-                
-                // ONLY run the logic if registration returned TRUE
-                initializeLiteMode();
-            } else {
-                // If register() returns false, it likely means a duplicate ID or invalid format.
-                console.error(`[${MOD_ID}] Registration Failed! Aborting Lite Mode.`);
+            const success = window.TGMoLink.register(MOD_ID);
+            if (success) {
+                console.log(`[${MOD_ID}] Optimizer Loaded. ⚡`);
+                initPerformanceMode();
             }
         } else {
-            // TGMoLink isn't ready yet. Wait 100ms and try again (Recursive Polling)
-            // This prevents the "Mod ran before API" error.
+            // Wait for TGMoLink
             setTimeout(startPlug, 100);
         }
     }
 
-    // 3. The Payload (The Surgeon Logic)
-    function initializeLiteMode() {
-        // Broadcast presence
-        if(window.TGMoLink.broadcast) {
-            window.TGMoLink.broadcast("Optimizing environment for low-spec hardware.", MOD_ID);
-        }
-
-        // DOM SURGERY
-        const toolbar = document.querySelector('.toolbar');
-        const oldNav = document.querySelector('.nav-buttons');
-        const oldMenu = document.querySelector('.menu');
-        const oldBook = document.querySelector('#bookmarkBtn');
-
-        // Remove the stuff we don't need
-        if(oldNav) oldNav.remove();
-        if(oldMenu) oldMenu.remove();
-        if(oldBook) oldBook.remove();
-
-        // Create TV-Friendly Controls
-        const controlPanel = document.createElement('div');
-        controlPanel.style.display = 'flex';
-        controlPanel.style.alignItems = 'center';
-
-        // Helper to create buttons
-        function createTvBtn(text, onClick) {
-            const btn = document.createElement('button');
-            btn.className = 'tv-btn';
-            btn.innerText = text;
-            btn.onclick = onClick;
-            return btn;
-        }
-
-        // BACK
-        controlPanel.appendChild(createTvBtn('<', () => {
-            if(window.currentIframe) window.currentIframe.contentWindow.history.back();
-        }));
-
-        // FORWARD
-        controlPanel.appendChild(createTvBtn('>', () => {
-            if(window.currentIframe) window.currentIframe.contentWindow.history.forward();
-        }));
-
-        // REFRESH
-        controlPanel.appendChild(createTvBtn('R', () => {
-            if (window.currentIframe) window.currentIframe.src = window.currentIframe.src;
-        }));
-
-        // GO Button (Explicit Submit)
-        const goBtn = createTvBtn('GO', () => {
-            if (typeof window.loadFromInput === 'function') {
-                window.loadFromInput();
-            }
-        });
-        goBtn.style.background = 'var(--primary)';
-        goBtn.style.color = 'black';
-        goBtn.style.marginLeft = '10px';
-
-        // Insert new controls
-        if (toolbar) {
-            toolbar.insertBefore(controlPanel, toolbar.firstChild);
-        }
+    // --- 2. Core Logic ---
+    function initPerformanceMode() {
+        injectMenuOption();
+        setupEventListeners();
         
-        const omnibox = document.querySelector('.omnibox-container');
-        if (omnibox) {
-            omnibox.appendChild(goBtn);
-        }
-
-        // Update Status
-        const status = document.getElementById('status');
-        if(status) {
-            status.innerText = "TGLite: Optimized & Secure";
-            status.style.color = "#00FF00";
+        // Run auto-detection
+        if (TGPerformanceDetector.detect()) {
+            activateMode();
         }
     }
 
-    // 4. Ignite
+    function injectMenuOption() {
+        const select = document.getElementById('ritualSelect');
+        if (!select) return;
+
+        // Prevent duplicates
+        if ([...select.options].some(o => o.value === 'performance')) return;
+
+        const option = document.createElement('option');
+        option.value = 'performance';
+        option.textContent = 'Low-Spec Mode (Optimized)';
+        
+        // Insert after Matrix Mode (or at end if not found)
+        const matrixOpt = select.querySelector('option[value="matrix"]');
+        if (matrixOpt && matrixOpt.nextSibling) {
+            select.insertBefore(option, matrixOpt.nextSibling);
+        } else {
+            select.appendChild(option);
+        }
+    }
+
+    function setupEventListeners() {
+        const select = document.getElementById('ritualSelect');
+        if (!select) return;
+
+        // We need to listen for changes to manually toggle our class
+        // because the base browser only knows about standard themes
+        select.addEventListener('change', (e) => {
+            if (e.target.value === 'performance') {
+                document.body.classList.add('ritual-performance');
+                showNotification("⚡ Performance Mode Enabled");
+            } else {
+                document.body.classList.remove('ritual-performance');
+            }
+        });
+    }
+
+    function activateMode() {
+        const select = document.getElementById('ritualSelect');
+        if (select) {
+            select.value = 'performance';
+            // Trigger change event so base browser clears other themes
+            select.dispatchEvent(new Event('change'));
+        }
+        document.body.classList.add('ritual-performance');
+    }
+    
+    function showNotification(msg) {
+        // Simple toaster for feedback
+        const notif = document.createElement('div');
+        notif.style.cssText = `
+            position: fixed; top: 80px; right: 20px;
+            background: #333; color: #fff; padding: 10px 20px;
+            border-radius: 8px; z-index: 10000; font-size: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease-out;
+        `;
+        notif.textContent = msg;
+        document.body.appendChild(notif);
+        setTimeout(() => {
+            notif.style.opacity = 0;
+            setTimeout(() => notif.remove(), 500);
+        }, 3000);
+    }
+
+    // --- 3. Detection Engine (from code2.txt) ---
+    const TGPerformanceDetector = {
+        detect: function() {
+            const checks = {
+                isTV: this.checkIfTV(),
+                lowRAM: this.checkRAM(),
+                weakGPU: this.checkGPU(),
+                // Added a check for saved preference
+                isSaved: localStorage.getItem('tgRitual') === 'performance'
+            };
+            
+            // If saved as performance, return true immediately
+            if (checks.isSaved) return true;
+
+            const isLowEnd = checks.isTV || checks.lowRAM || checks.weakGPU;
+            
+            if (isLowEnd) {
+                console.log('[TGPlug] 🥔 Potato device detected. Optimizing...');
+            }
+            return isLowEnd;
+        },
+        
+        checkIfTV: function() {
+            const ua = navigator.userAgent.toLowerCase();
+            const tvKeywords = ['smart-tv', 'smarttv', 'googletv', 'appletv', 'roku', 'webos', 'tizen'];
+            return tvKeywords.some(k => ua.includes(k));
+        },
+        
+        checkRAM: function() {
+            // If deviceMemory API exists and is < 4GB
+            return (navigator.deviceMemory && navigator.deviceMemory < 4);
+        },
+        
+        checkGPU: function() {
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl');
+                if (!gl) return true; // No WebGL = Weak
+                
+                const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                if (debugInfo) {
+                    const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+                    // Check for common weak mobile/integrated GPUs
+                    return /mali|adreno|videocore|intel hd|intel uhd/i.test(renderer);
+                }
+            } catch (e) { return true; }
+            return false;
+        }
+    };
+
+    // Start
     startPlug();
 
 })();

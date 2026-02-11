@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shaman's Workshop - TGPlugs</title>
+    <title>TGPlugs Collection</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     
     <style>
         :root {
-            /* MD3 Color Tokens */
-            --md-sys-color-primary: #0b57d0;
-            --md-sys-color-on-primary: #ffffff;
-            --md-sys-color-secondary-container: #d3e3fd;
-            --md-sys-color-on-secondary-container: #041e49;
-            --md-sys-color-surface: #ffffff;
-            --md-sys-color-surface-variant: #f0f4f9;
-            --md-sys-color-background: #f8f9fa;
-            --md-sys-color-outline: #747775;
+            /* RECOLORED: Monochrome Black/White Tokens (Matching Main Page) */
+            --md-sys-color-primary: #ffffff;
+            --md-sys-color-on-primary: #000000;
+            --md-sys-color-secondary-container: #333333;
+            --md-sys-color-on-secondary-container: #ffffff;
+            --md-sys-color-surface: #121212;
+            --md-sys-color-surface-variant: #1e1e1e;
+            --md-sys-color-background: #000000;
+            --md-sys-color-outline: #444444;
             
-            --md-elevation-1: 0px 1px 3px 1px rgba(0, 0, 0, 0.15), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+
+            --md-elevation-1: 0px 1px 3px 1px rgba(255, 255, 255, 0.05), 0px 1px 2px 0px rgba(0, 0, 0, 0.3);
+            --md-elevation-3: 0px 4px 8px 3px rgba(0, 0, 0, 0.5), 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
         }
 
         * {
@@ -32,7 +37,7 @@
         body {
             font-family: 'Roboto', sans-serif;
             background-color: var(--md-sys-color-background);
-            color: #1f1f1f;
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -40,252 +45,119 @@
             justify-content: center;
             position: relative;
             overflow-x: hidden;
+            padding: 40px 0;
         }
 
         /* --- Background Animation --- */
         .bg-shape-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-            overflow: hidden;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            display: flex; align-items: center; justify-content: center; pointer-events: none; overflow: hidden;
         }
 
         .hexagon-spinner {
-            width: 65vh;
-            height: 65vh;
-            color: var(--md-sys-color-primary);
-            opacity: 0.08;
+            width: 65vh; height: 65vh; color: var(--md-sys-color-primary); opacity: 0.05;
             animation: spin 12s linear infinite;
         }
 
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         /* --- Main Layout --- */
         .container {
-            max-width: 600px; /* Slightly wider than index to accommodate descriptions */
-            width: 100%;
-            padding: 40px 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            z-index: 1;
-            /* Glassmorphism */
-            background: rgba(248, 249, 250, 0.65);
-            border-radius: 32px;
-            margin: 20px;
+            max-width: 600px; width: 100%; padding: 40px 24px;
+            display: flex; flex-direction: column; gap: 24px; z-index: 1;
+            /* Dark glass effect */
+            background: rgba(20, 20, 20, 0.85); 
+            border: 1px solid #333;
+            border-radius: 32px; margin: 20px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
-        /* Header */
-        header {
-            text-align: center;
-            margin-bottom: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
+        /* Header & Mascot */
+        header { text-align: center; margin-bottom: 8px; display: flex; flex-direction: column; align-items: center; }
+        
         .mascot-container {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 16px;
-            border-radius: 50%;
-            background-color: var(--md-sys-color-surface);
-            padding: 6px;
-            box-shadow: var(--md-elevation-1);
+            width: 100px; height: 100px; margin-bottom: 16px; border-radius: 50%;
+            background-color: var(--md-sys-color-surface-variant);
+            padding: 4px; border: 1px solid var(--md-sys-color-outline);
             overflow: hidden;
         }
-        
-        .mascot-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
+        .mascot-container img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; opacity: 0.9; }
 
-        h1 {
-            font-size: 32px;
-            font-weight: 400;
-            color: #1f1f1f;
-            margin-bottom: 4px;
-        }
-
-        .subtitle {
-            font-size: 16px;
-            color: #5e5e5e;
-            font-weight: 400;
-            line-height: 1.4;
-        }
-        
-        .subtitle.mini {
-            font-size: 13px;
-            margin-top: 4px;
-            font-style: italic;
-        }
+        h1 { font-size: 32px; font-weight: 400; color: var(--text-primary); margin-bottom: 4px; }
+        .subtitle { font-size: 16px; color: var(--text-secondary); font-weight: 400; line-height: 1.4; }
+        .subtitle.mini { font-size: 13px; margin-top: 6px; font-style: italic; opacity: 0.7; }
 
         /* Primary Action (GitHub) */
-        .primary-action-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 8px;
-        }
+        .primary-action-container { display: flex; justify-content: center; margin-bottom: 8px; }
 
         .fab-primary {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            background-color: var(--md-sys-color-primary);
-            color: var(--md-sys-color-on-primary);
-            padding: 16px 32px;
-            border-radius: 100px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            box-shadow: var(--md-elevation-1);
-            border: none;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-            font-weight: 500;
-            position: relative;
-            overflow: hidden;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            background-color: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary);
+            padding: 16px 32px; border-radius: 100px; text-decoration: none;
+            transition: all 0.2s ease; box-shadow: var(--md-elevation-1); border: none;
+            cursor: pointer; width: 100%; font-size: 16px; font-weight: 500; position: relative; overflow: hidden;
         }
+        .fab-primary:hover { background-color: #e0e0e0; box-shadow: 0 4px 12px rgba(255,255,255,0.15); }
 
-        .fab-primary:hover {
-            background-color: #0842a0;
-            box-shadow: 0 4px 8px 3px rgba(0,0,0,0.15);
-        }
-
-        /* Lists (Projects) */
+        /* --- Section Headers --- */
         .section-header {
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--md-sys-color-primary);
-            margin-bottom: 8px;
-            margin-top: 8px;
-            padding-left: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 12px; font-weight: 600; color: var(--text-secondary);
+            margin: 12px 0 8px 12px; text-transform: uppercase; letter-spacing: 1px;
         }
 
-        .list-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        /* --- List Items --- */
+        .list-group { display: flex; flex-direction: column; gap: 10px; }
 
         .list-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background-color: var(--md-sys-color-surface);
-            padding: 16px 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            color: #1f1f1f;
-            transition: background-color 0.2s;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.05);
+            display: flex; align-items: center; gap: 16px;
+            background-color: var(--md-sys-color-surface); padding: 18px 20px;
+            border-radius: 20px; text-decoration: none; color: var(--text-primary);
+            transition: all 0.2s; position: relative; overflow: hidden;
+            border: 1px solid var(--md-sys-color-outline);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.5);
         }
 
         .list-item:hover {
             background-color: var(--md-sys-color-surface-variant);
+            transform: translateY(-2px);
+            border-color: #666;
+            box-shadow: var(--md-elevation-1);
         }
 
-        .item-icon {
-            color: #5e5e5e;
-            font-size: 24px;
-            min-width: 24px; /* Prevent shrinking */
-        }
+        .item-icon { color: var(--text-secondary); font-size: 24px; min-width: 24px; }
+        .item-content { flex-grow: 1; }
+        .item-title { font-size: 16px; font-weight: 500; margin-bottom: 4px; }
+        .item-subtitle { font-size: 13px; color: var(--text-secondary); line-height: 1.3; }
+        .item-arrow { color: #555; font-size: 20px; }
 
-        .item-content {
-            flex-grow: 1;
-        }
-
-        .item-title {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 2px;
-        }
-
-        .item-subtitle {
-            font-size: 13px;
-            color: #5e5e5e;
-            line-height: 1.3;
-        }
-
-        .item-arrow {
-            color: #bcbcbc;
-            font-size: 20px;
-        }
-        
         /* Navigation (Back Button) */
         .nav-secondary {
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px;
-            color: var(--md-sys-color-outline);
-            font-size: 14px;
-            font-weight: 500;
-            border-radius: 100px;
-            transition: color 0.2s, background-color 0.2s;
+            text-decoration: none; display: flex; align-items: center; justify-content: center;
+            gap: 8px; padding: 12px; color: var(--text-secondary);
+            font-size: 14px; font-weight: 500; border-radius: 100px;
+            transition: color 0.2s, background-color 0.2s; margin-top: 16px;
         }
         
-        .nav-secondary:hover {
-            color: var(--md-sys-color-primary);
-            background-color: rgba(11, 87, 208, 0.05);
-        }
+        .nav-secondary:hover { color: var(--text-primary); background-color: rgba(255, 255, 255, 0.05); }
 
         /* Footer */
-        footer {
-            margin-top: 8px;
-            text-align: center;
-            font-size: 11px;
-            color: #8e918f;
-        }
+        footer { margin-top: 16px; text-align: center; font-size: 11px; color: #555; }
 
         /* Ripple */
         .ripple {
-            position: absolute;
-            border-radius: 50%;
-            transform: scale(0);
-            animation: ripple 0.6s linear;
-            background-color: rgba(0, 0, 0, 0.1);
-            pointer-events: none;
+            position: absolute; border-radius: 50%; transform: scale(0);
+            animation: ripple 0.6s linear; background-color: rgba(255, 255, 255, 0.1); pointer-events: none;
         }
-        .fab-primary .ripple {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
+        .fab-primary .ripple { background-color: rgba(0, 0, 0, 0.2); }
+        @keyframes ripple { to { transform: scale(4); opacity: 0; } }
     </style>
 </head>
 <body>
 
     <div class="bg-shape-container">
         <svg class="hexagon-spinner" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="50 5, 95 27.5, 95 72.5, 50 95, 5 72.5, 5 27.5" 
-                     fill="none" stroke="currentColor" stroke-width="1.5" />
-            <polygon points="50 25, 72.5 36.25, 72.5 63.75, 50 75, 27.5 63.75, 27.5 36.25" 
-                     fill="currentColor" opacity="0.5"/>
+            <polygon points="50 5, 95 27.5, 95 72.5, 50 95, 5 72.5, 5 27.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+            <polygon points="50 25, 72.5 36.25, 72.5 63.75, 50 75, 27.5 63.75, 27.5 36.25" fill="currentColor" opacity="0.5"/>
         </svg>
     </div>
 
@@ -293,26 +165,26 @@
         
         <header>
             <div class="mascot-container">
-                <img src="columbina.png" alt="COLUMBINAAAAA">
+                <img src="columbina.png" alt="Columbina Mascot">
             </div>
             <h1>TGPlugs Collection</h1>
-            <div class="subtitle">Developer/Community made TGPlugs for TGBrowser</div>
-            <div class="subtitle">HEX Workshop v3</div>
+            <div class="subtitle">Official & Community Extensions</div>
+            <div class="subtitle">Type this TGPlug's name into the "Install TGPlug" section!</div>
             <div class="subtitle mini">Bina is thinking...</div>
         </header>
 
         <div class="primary-action-container">
-            <a href="https://github.com/shamansworkshop/tgplugs" target="_blank" class="fab-primary" onclick="createRipple(event)">
+            <a href="https://github.com/hexonlabs/tgplugs" target="_blank" class="fab-primary" onclick="createRipple(event)">
                 <i class="material-icons-round">code</i>
                 <span>View Full Repository</span>
             </a>
         </div>
 
         <div>
-            <div class="section-header">Available TGPlugs</div>
+            <div class="section-header">Toolkits</div>
             <div class="list-group">
                 
-                <a href="https://github.com/shamansworkshop/tgplugs/tree/main/DevKit" class="list-item" onclick="createRipple(event)">
+                <a href="https://github.com/hexonlabs/tgplugs/tree/main/DevKit" class="list-item" onclick="createRipple(event)">
                     <i class="material-icons-round item-icon">analytics</i>
                     <div class="item-content">
                         <div class="item-title">DevKit</div>
@@ -321,34 +193,7 @@
                     <i class="material-icons-round item-arrow">chevron_right</i>
                 </a>
 
-                <a href="https://github.com/shamansworkshop/tgplugs/tree/main/GIFModLoader" class="list-item" onclick="createRipple(event)">
-                    <i class="material-icons-round item-icon">gif</i>
-                    <div class="item-content">
-                        <div class="item-title">GIFModLoader</div>
-                        <div class="item-subtitle">Instantly load & view pasted GIPHY links.</div>
-                    </div>
-                    <i class="material-icons-round item-arrow">chevron_right</i>
-                </a>
-
-                <a href="https://github.com/shamansworkshop/tgplugs/tree/main/RetroUI" class="list-item" onclick="createRipple(event)">
-                    <i class="material-icons-round item-icon">palette</i>
-                    <div class="item-content">
-                        <div class="item-title">RetroUI</div>
-                        <div class="item-subtitle">Neon-cyan retro themes for a stylish blast from the past.</div>
-                    </div>
-                    <i class="material-icons-round item-arrow">chevron_right</i>
-                </a>
-
-                <a href="https://github.com/shamansworkshop/tgplugs/tree/main/SumTingWong" class="list-item" onclick="createRipple(event)">
-                    <i class="material-icons-round item-icon">dangerous</i>
-                    <div class="item-content">
-                        <div class="item-title">SumTingWong</div>
-                        <div class="item-subtitle">Simulate crashes for testing or pranking.</div>
-                    </div>
-                    <i class="material-icons-round item-arrow">chevron_right</i>
-                </a>
-
-                <a href="https://github.com/shamansworkshop/tgplugs/tree/main/LowSpecLite" class="list-item" onclick="createRipple(event)">
+                <a href="https://github.com/hexonlabs/tgplugs/tree/main/LowSpecLite" class="list-item" onclick="createRipple(event)">
                     <i class="material-icons-round item-icon">bolt</i>
                     <div class="item-content">
                         <div class="item-title">LowSpecLite</div>
@@ -357,7 +202,7 @@
                     <i class="material-icons-round item-arrow">chevron_right</i>
                 </a>
 
-                <a href="https://github.com/shamansworkshop/tgplugs/tree/main/DragNDrop" class="list-item" onclick="createRipple(event)">
+                <a href="https://github.com/hexonlabs/tgplugs/tree/main/DragNDrop" class="list-item" onclick="createRipple(event)">
                     <i class="material-icons-round item-icon">extension</i>
                     <div class="item-content">
                         <div class="item-title">DragNDrop</div>
@@ -370,15 +215,64 @@
         </div>
 
         <div>
-            <div class="section-header">Navigation</div>
-            <a href="https://shamansworkshop.github.io" class="nav-secondary">
+            <div class="section-header">Customs</div>
+            <div class="list-group">
+
+                <a href="https://github.com/hexonlabs/tgplugs/tree/main/GIFModLoader" class="list-item" onclick="createRipple(event)">
+                    <i class="material-icons-round item-icon">gif</i>
+                    <div class="item-content">
+                        <div class="item-title">GIFModLoader</div>
+                        <div class="item-subtitle">Instantly load & view pasted GIPHY links.</div>
+                    </div>
+                    <i class="material-icons-round item-arrow">chevron_right</i>
+                </a>
+
+                <a href="https://github.com/hexonlabs/tgplugs/tree/main/RetroUI" class="list-item" onclick="createRipple(event)">
+                    <i class="material-icons-round item-icon">palette</i>
+                    <div class="item-content">
+                        <div class="item-title">RetroUI</div>
+                        <div class="item-subtitle">Neon-cyan retro themes for a stylish blast from the past.</div>
+                    </div>
+                    <i class="material-icons-round item-arrow">chevron_right</i>
+                </a>
+
+                <a href="https://github.com/hexonlabs/tgplugs/tree/main/SumTingWong" class="list-item" onclick="createRipple(event)">
+                    <i class="material-icons-round item-icon">dangerous</i>
+                    <div class="item-content">
+                        <div class="item-title">SumTingWong</div>
+                        <div class="item-subtitle">Simulate crashes for testing or pranking.</div>
+                    </div>
+                    <i class="material-icons-round item-arrow">chevron_right</i>
+                </a>
+
+            </div>
+        </div>
+        
+        <div>
+            <div class="section-header">Community</div>
+            <div class="list-group">
+
+                <a href="https://hexonlabs.github.io/404" class="list-item" onclick="createRipple(event)">
+                    <i class="material-icons-round item-icon">info</i>
+                    <div class="item-content">
+                        <div class="item-title">???</div>
+                        <div class="item-subtitle">Community made TGPlug placeholder.</div>
+                    </div>
+                    <i class="material-icons-round item-arrow">chevron_right</i>
+                </a>
+
+            </div>
+        </div>
+
+        <div>
+            <a href="https://hexonlabs.github.io" class="nav-secondary">
                 <i class="material-icons-round">arrow_back</i>
-                <span>Return to Workshop</span>
+                <span>Go back to the Lab</span>
             </a>
         </div>
 
         <footer>
-            <p>2025 Shaman's Workshop</p>
+            <p>2025-2026 HEXON Laboratories</p>
         </footer>
 
     </div>
